@@ -13,24 +13,26 @@ import {
 } from "@material-ui/core";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 // Internal imports
-import { useStyles } from "./LoginStyle";
+import { useStyles } from "./RegisterStyle";
 import ErrorMsg from "../../Components/ErrorMsg/ErrorMsg";
 import { capitalize, capitalizeInitials } from "../../Reducers/Locale/Tools";
 import { LocaleContext } from "../../Reducers/Locale/LocaleContext";
 
-interface LoginFormInputs {
+interface RegisterFormInputs {
   user: string;
   password: string;
 }
 
-function Login() {
+function Register() {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<LoginFormInputs>();
+  } = useForm<RegisterFormInputs>();
   const classes = useStyles();
 
   const { locale } = useContext(LocaleContext);
@@ -38,14 +40,19 @@ function Login() {
   const [usernick, setUsernick] = useState("");
   const [password, setPassword] = useState("");
   const [errorToggler, setErrorToggler] = useState(false);
+  const [hidePass, setHidePass] = useState(true);
 
   const onSubmit = (data: any) => {
     console.log("data", data);
     alert(JSON.stringify(data));
   };
 
+  const handleToggleHidePassword = () => {
+    setHidePass(!hidePass);
+  };
+
   return (
-    <div className={classes.loginWrapper}>
+    <div className={classes.RegisterWrapper}>
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -96,11 +103,22 @@ function Login() {
             // required
             fullWidth
             placeholder={capitalizeInitials(locale.msgs.password)}
-            type="password"
+            type={hidePass ? "password" : ""}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <LockOutlinedIcon className={classes.lockIcon} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="start">
+                  <ButtonBase onClick={handleToggleHidePassword}>
+                    {hidePass ? (
+                      <VisibilityIcon className={classes.lockIcon} />
+                    ) : (
+                      <VisibilityOffIcon className={classes.lockIcon} />
+                    )}
+                  </ButtonBase>
                 </InputAdornment>
               ),
               classes: { notchedOutline: classes.noBorder },
@@ -108,16 +126,6 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <div className={classes.loginBaseBtns}>
-            <ButtonBase className={classes.forgetBtn}>
-              {capitalize(locale.msgs.forgot_password_q)}
-            </ButtonBase>
-
-            <ButtonBase className={classes.forgetBtn}>
-              {capitalize(locale.msgs.sign_up)}
-            </ButtonBase>
-          </div>
 
           <Button
             type="submit"
@@ -137,7 +145,7 @@ function Login() {
         <ErrorMsg
           msg={
             errors.user || errors.password
-              ? capitalize(locale.msgs.wrong_login)
+              ? capitalize(locale.msgs.wrong_Register)
               : ""
           }
           snackBar={{
@@ -150,4 +158,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
