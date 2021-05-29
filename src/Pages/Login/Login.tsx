@@ -1,5 +1,5 @@
 // Third party libs
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 
 // material-ui
@@ -17,23 +17,27 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 // Internal imports
 import { useStyles } from "./LoginStyle";
 import ErrorMsg from "../../Components/ErrorMsg/ErrorMsg";
+import { capitalize, capitalizeInitials } from "../../Reducers/Locale/Tools";
+import { LocaleContext } from "../../Reducers/Locale/LocaleContext";
 
 interface LoginFormInputs {
   user: string;
   password: string;
 }
 
-function Login(props?: {}) {
+function Login() {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<LoginFormInputs>();
+  const classes = useStyles();
+
+  const { locale } = useContext(LocaleContext);
+
   const [usernick, setUsernick] = useState("");
   const [password, setPassword] = useState("");
   const [errorToggler, setErrorToggler] = useState(false);
-
-  const classes = useStyles();
 
   const onSubmit = (data: any) => {
     console.log("data", data);
@@ -62,7 +66,7 @@ function Login(props?: {}) {
             margin="normal"
             // required
             fullWidth
-            placeholder="Usuário"
+            placeholder={capitalizeInitials(locale.msgs.nick)}
             autoFocus
             InputProps={{
               startAdornment: (
@@ -81,7 +85,7 @@ function Login(props?: {}) {
               required: "Password é requerido",
               minLength: {
                 value: 4,
-                message: "Senha deve ter no mínimo 4 caracteres",
+                message: `${capitalizeInitials(locale.msgs.field_too_short)} 4`,
               },
             })}
             className={classes.inputBox}
@@ -89,7 +93,7 @@ function Login(props?: {}) {
             margin="normal"
             // required
             fullWidth
-            placeholder="Senha"
+            placeholder={capitalizeInitials(locale.msgs.password)}
             type="password"
             InputProps={{
               startAdornment: (
@@ -105,10 +109,12 @@ function Login(props?: {}) {
 
           <div className={classes.loginBaseBtns}>
             <ButtonBase className={classes.forgetBtn}>
-              Esqueceu a senha?
+              {capitalize(locale.msgs.forgot_password_q)}
             </ButtonBase>
 
-            <ButtonBase className={classes.forgetBtn}>Registrar</ButtonBase>
+            <ButtonBase className={classes.forgetBtn}>
+              {capitalize(locale.msgs.sign_up)}
+            </ButtonBase>
           </div>
 
           <Button
@@ -121,7 +127,7 @@ function Login(props?: {}) {
               component="span"
               className={classes.submitText}
             >
-              Entrar
+              {capitalize(locale.msgs.sign_in)}
             </Typography>
           </Button>
         </form>

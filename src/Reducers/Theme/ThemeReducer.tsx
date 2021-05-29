@@ -68,9 +68,9 @@ export const initialState = createMuiTheme({
     },
   },
   extras: {
-    stdBorderRadius: `${borderRadius}px`,
-    stdBtnWidth: `${btnSize}px`,
-    stdBtnHeight: `${btnSize}px`,
+    stdBorderRadius: borderRadius,
+    stdBtnWidth: btnSize,
+    stdBtnHeight: btnSize,
     borderRadius: (a?: number, b?: number, c?: number, d?: number) => {
       let tr, tl, br, bl;
 
@@ -141,7 +141,7 @@ export const initialState = createMuiTheme({
 
 export const ThemeReducer = (state: any, action: any) => {
   switch (action.type) {
-    case "GREEN_MORNING":
+    case "GREEN":
       return initialState;
 
     case "LIGHT":

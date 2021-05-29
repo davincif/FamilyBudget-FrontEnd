@@ -12,9 +12,9 @@ declare module "@material-ui/core/styles/createBreakpoints" {
 }
 
 interface extras {
-  stdBorderRadius: string;
-  stdBtnWidth: string;
-  stdBtnHeight: string;
+  stdBorderRadius: string | number;
+  stdBtnWidth: string | number;
+  stdBtnHeight: string | number;
   borderRadius: (a?: number, b?: number, c?: number, d?: number) => string;
   snackBars: {
     success: {
@@ -61,9 +61,9 @@ interface extras {
 }
 
 interface extrasOptions {
-  stdBorderRadius?: string;
-  stdBtnWidth?: string;
-  stdBtnHeight?: string;
+  stdBorderRadius?: string | number;
+  stdBtnWidth?: string | number;
+  stdBtnHeight?: string | number;
   borderRadius?: (a: number, b?: number, c?: number, d?: number) => string;
   snackBars?: {
     success?: {

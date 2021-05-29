@@ -7,11 +7,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ThemeContextProdiver from "./Reducers/Theme/ThemeContext";
+import LocaleContextProdiver from "./Reducers/Locale/LocaleContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeContextProdiver>
-      <App />
+      <LocaleContextProdiver>
+        <App />
+      </LocaleContextProdiver>
     </ThemeContextProdiver>
   </React.StrictMode>,
   document.getElementById("root")
